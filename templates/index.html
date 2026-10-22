@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>S3 Uploads</title>
+    </head>
+    <body>
+        <h1>Upload a file</h1>
+        <form action="{{ url_for('upload') }}" method="post" enctype="multipart/form-data">
+            <input type="file" name="file">
+            <button type="submit">Upload</button>
+        </form>
+
+        <h2>Uploaded Files</h2>
+        <ul>
+            {% for upload in uploads %}
+                <li>{{ upload.filename }} - {{ upload.uploaded_at }}</li>
+            {% else %}
+                <li>No files uploaded yet.</li>
+            {% endfor %}
+        </ul>
+    </body>
+</html>
