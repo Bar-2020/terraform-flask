@@ -36,7 +36,12 @@ def upload():
     file = request.files["file"]
     if file and file.filename:
         key = f"{uuid.uuid4()}_{file.filename}"
-        s3.upload_fileobj(file, BUCKET, key)
+        s3.upload_fileobj(
+            file,
+            BUCKET,
+            key,
+            ExtraArgs={"StorageClass": "STANDARD_IA"},
+        )
         table.put_item(
             Item={
                 "id": key,

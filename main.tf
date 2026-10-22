@@ -18,6 +18,21 @@ resource "aws_s3_bucket" "test" {
   force_destroy = true
 }
 
+# resource "aws_s3_bucket_lifecycle_configuration" "uploads" {
+#   bucket = aws_s3_bucket.test.id
+
+#   rule {
+#     id     = "cheaper-storage"
+#     status = "Enabled"
+#     filter {}
+
+#     transition {
+#       days          = 30
+#       storage_class = "STANDARD_IA"
+#     }
+#   }
+# }
+
 resource "aws_dynamodb_table" "uploads" {
   name         = "${var.project_name}-uploads"
   billing_mode = "PAY_PER_REQUEST"
