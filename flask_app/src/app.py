@@ -11,6 +11,7 @@ load_dotenv(override=True)
 BUCKET = os.environ.get("BUCKET_NAME")
 DYNAMODB_TABLE = os.environ.get("DYNAMODB_TABLE_NAME")
 REGION = os.environ.get("AWS_REGION", "eu-north-1")
+STORAGE_CLASS = os.environ.get("STORAGE_CLASS", "STANDARD_IA")
 
 session = boto3.Session(
     aws_access_key_id=os.environ.get("AWS_ACCESS_KEY_ID"),
@@ -40,13 +41,14 @@ def upload():
             file,
             BUCKET,
             key,
-            ExtraArgs={"StorageClass": "STANDARD_IA"},
+            ExtraArgs={"StorageClass": STORAGE_CLASS},
         )
         table.put_item(
             Item={
                 "id": key,
                 "filename": file.filename,
                 "uploaded_at": datetime.now(timezone.utc).isoformat(),
+                "storage_class": STORAGE_CLASS,
             }
         )
     return redirect(url_for("index"))

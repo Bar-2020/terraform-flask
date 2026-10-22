@@ -13,7 +13,7 @@
         <h2>Uploaded Files</h2>
         <ul>
             {% for upload in uploads %}
-                <li>{{ upload.filename }} - {{ upload.uploaded_at }}</li>
+                <li>{{ upload.filename }} - {{ upload.uploaded_at }} - {{ upload.storage_class }}</li>
             {% else %}
                 <li>No files uploaded yet.</li>
             {% endfor %}
