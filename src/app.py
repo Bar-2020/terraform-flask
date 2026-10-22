@@ -21,7 +21,7 @@ session = boto3.Session(
 s3 = session.client("s3")
 table = session.resource("dynamodb").Table(DYNAMODB_TABLE)
 
-app = Flask(__name__)
+app = Flask(__name__, template_folder="../templates")
 
 
 @app.route("/")
