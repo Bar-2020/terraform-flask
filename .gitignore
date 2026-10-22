@@ -8,3 +8,8 @@ wheels/
 
 # Virtual environments
 .venv
+
+# Local secrets (AWS credentials, bucket/table names)
+.env
+.env.*
+!.env.example
