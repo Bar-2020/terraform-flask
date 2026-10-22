@@ -4,13 +4,33 @@ terraform {
       source  = "hashicorp/aws"
       version = "~> 6.0"
     }
+    docker = {
+      source  = "kreuzwerker/docker"
+      version = "~> 4.2.0"
+    }
   }
-
 }
 
 provider "aws" {
   region  = var.region
   profile = var.profile_name
+}
+
+provider "docker" {}
+
+resource "docker_image" "nginx" {
+  name         = "nginx:latest"
+  keep_locally = false
+}
+
+resource "docker_container" "nginx" {
+  image = docker_image.nginx.image_id
+  name  = "tutorial"
+
+  ports {
+    internal = 80
+    external = 8000
+  }
 }
 
 resource "aws_s3_bucket" "test" {
